@@ -1,21 +1,25 @@
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable react/function-component-definition */
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Spinner } from '@chakra-ui/react'
 import HomeContainer from './containers/HomeContainer'
+import { Product, ProductDb } from './types/types'
 
 const token =
     // eslint-disable-next-line max-len
     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY5OGJjN2FkYzQ1NTAwMWE2Y2JjM2IiLCJpYXQiOjE2NTEwODQyMzF9.z98IN81adDVPCXeVSZHGWBYxlY7tnQeWKQgT_YfkiYA'
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 
-const App: React.FC = () => {
-    const [res, setRes] = useState<object[]>([
+const App: FC = () => {
+    const [res, setRes] = useState<Product[]>([
         {
-            _id: 'string',
+            id: 'string',
             category: 'string',
-            cost: 0,
-            description: 'string',
-            image: { url: 'string', hdUrl: 'string' },
+            cost: 10,
+            title: 'string',
+            img: { url: 'string', hdUrl: 'string' },
         },
     ])
     console.log('res in app:', res)
@@ -30,7 +34,14 @@ const App: React.FC = () => {
         })
             .then((response) => response.json())
             .then((products) => {
-                setRes(products)
+                const transformed = products.map((product: ProductDb) => ({
+                    id: product._id,
+                    category: product.category,
+                    cost: products.cost,
+                    title: product.name,
+                    img: product.img,
+                }))
+                setRes(transformed)
             })
             .catch((error) => {
                 console.error(error)
@@ -40,7 +51,7 @@ const App: React.FC = () => {
     if (res.length > 0) {
         content = <HomeContainer products={res} />
     }
-    return { content }
+    return content
 }
 
 export default App

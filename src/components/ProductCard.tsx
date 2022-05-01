@@ -14,7 +14,7 @@ interface ProductCardProps {
 const ProductCard: FC<ProductCardProps> = ({
     product,
     product: {
-        _id,
+        id,
         category,
         cost,
         img: { hdUrl },
@@ -27,7 +27,7 @@ const ProductCard: FC<ProductCardProps> = ({
         borderRadius="md"
         padding={4}
         spacing={4}
-        key={_id}
+        key={id}
         boxShadow="xl"
         p="6"
         rounded="md"

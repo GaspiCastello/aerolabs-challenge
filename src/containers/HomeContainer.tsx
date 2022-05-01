@@ -56,7 +56,7 @@ const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
                 >
                     {products.map((product) => (
                         <ProductCard
-                            key={product._id}
+                            key={product.id}
                             product={product}
                             onAdd={(product) =>
                                 handleEditCart(product, 'increment')
