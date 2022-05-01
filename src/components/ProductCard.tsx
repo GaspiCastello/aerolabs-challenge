@@ -1,21 +1,33 @@
+/* eslint-disable react/function-component-definition */
+/* eslint-disable max-len */
 import React, { FC } from 'react'
 import { Button, Stack, Text, Image } from '@chakra-ui/react'
 
 import { Product } from '../types/types'
-import parseCurrency from '../utils/helpers'
+import { parseCurrency } from '../utils/helpers'
 
 interface ProductCardProps {
     product: Product
     onAdd: (product: Product) => void
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, onAdd }) => (
+const ProductCard: FC<ProductCardProps> = ({
+    product,
+    product: {
+        _id,
+        category,
+        cost,
+        img: { hdUrl },
+        title,
+    },
+    onAdd,
+}) => (
     <Stack
         backgroundColor="primary.100"
         borderRadius="md"
         padding={4}
         spacing={4}
-        key={product.id}
+        key={_id}
         boxShadow="xl"
         p="6"
         rounded="md"
@@ -25,12 +37,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAdd }) => (
                 maxHeight={128}
                 objectFit="cover"
                 borderRadius="md"
-                src={product.image}
+                src={hdUrl}
             />
             <Text color="primary.800" fontWeight={500}>
-                {product.title}
+                {title}
             </Text>
-            <Text fontSize="sm">{product.description}</Text>
+            <Text fontSize="sm">{category}</Text>
         </Stack>
 
         <Stack
@@ -39,7 +51,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAdd }) => (
             justifyContent="space-between"
         >
             <Text color="green.500" fontSize="sm" fontWeight="500">
-                {parseCurrency(product.price)}
+                {parseCurrency(cost)}
             </Text>
             <Button
                 size="sm"
@@ -50,7 +62,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAdd }) => (
                 variant="solid"
                 onClick={() => onAdd(product)}
             >
-                Agregar
+                Add
             </Button>
         </Stack>
     </Stack>

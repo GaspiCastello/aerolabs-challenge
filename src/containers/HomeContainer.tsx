@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/function-component-definition */
 import React, { FC, useState, useMemo } from 'react'
 import {
@@ -10,7 +11,7 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 
-import { Product } from '../types/types'
+import { CartItem, Product } from '../types/types'
 import ProductCard from '../components/ProductCard'
 import DrawerCart from '../components/DrawerCart'
 import { editCart, parseCurrency } from '../utils/helpers'
@@ -20,13 +21,13 @@ interface HomeContainerProps {
 }
 
 const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
-    const [cart, setCart] = useState<Product[]>([])
+    const [cart, setCart] = useState<CartItem[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
     const total = useMemo(
         () =>
             parseCurrency(
                 cart.reduce(
-                    (total, product) => total + product.cost * product.quantity,
+                    (acc, product) => acc + product.cost * product.quantity,
                     0
                 )
             ),
@@ -37,10 +38,11 @@ const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
         [cart]
     )
 
-    function handleEditCart(
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const handleEditCart = (
         product: Product,
         action: 'increment' | 'decrement' | 'delete'
-    ) {
+    ) => {
         setCart(editCart(product, action))
     }
 

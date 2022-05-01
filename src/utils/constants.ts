@@ -7,15 +7,15 @@ export const information = {
     phone: '+543426156014',
     social: [
         {
-            name: 'instagram',
+            title: 'instagram',
             link: '',
         },
         {
-            name: 'facebook',
+            title: 'facebook',
             link: '',
         },
         {
-            name: 'twitter',
+            title: 'twitter',
             link: '',
         },
     ],
