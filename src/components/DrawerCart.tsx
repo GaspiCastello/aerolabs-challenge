@@ -39,14 +39,15 @@ const DrawerCart: FC<Props> = ({
     onIncrement,
     onDelete,
 }) => {
-    let totalToParse: number
-    if (items.length > 0) {
-        totalToParse = items.reduce(
-            (acc, product) => acc + product.cost * product.quantity,
-            0
-        )
-    }
-    const total = useMemo(() => parseCurrency(totalToParse), [items])
+    const total =
+        // useMemo(() => {
+        // parseCurrency(
+        items.reduce((acc, product) => acc + product.cost * product.quantity, 0)
+    //     0
+    // )
+    // )
+    // }, [items])
+
     const text = useMemo(
         () =>
             items
@@ -66,7 +67,8 @@ const DrawerCart: FC<Props> = ({
                 .concat(`\nTotal: ${total}`),
         [items, total]
     )
-    // console.log(items);
+    console.log('text:', text)
+    console.log('total:', total)
     return (
         <>
             {' '}
@@ -182,8 +184,8 @@ const DrawerCart: FC<Props> = ({
                                     fontWeight="500"
                                     justifyContent="space-between"
                                 >
-                                    <Text fontSize="xl">Total </Text>
-                                    <Text fontSize="xl">{total}</Text>
+                                    <Text fontSize="xl">Total:</Text>
+                                    <Text fontSize="xl">{total} Points</Text>
                                 </Stack>
                                 <Button
                                     isExternal

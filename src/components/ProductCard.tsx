@@ -42,7 +42,7 @@ const ProductCard: FC<ProductCardProps> = ({
             <Text color="primary.800" fontWeight={500}>
                 {title}
             </Text>
-            <Text fontSize="sm">{category}</Text>
+            <Text fontSize="sm">Category: {category}</Text>
         </Stack>
 
         <Stack
@@ -50,19 +50,26 @@ const ProductCard: FC<ProductCardProps> = ({
             direction="row"
             justifyContent="space-between"
         >
-            <Text color="green.500" fontSize="sm" fontWeight="500">
-                {parseCurrency(cost)}
+            <Text
+                backgroundColor="#F49E4C"
+                rounded="2rem"
+                color="white"
+                fontSize="md"
+                fontWeight="500"
+                p=".5rem"
+            >
+                {cost} points
             </Text>
             <Button
-                size="sm"
-                bg="primary.400"
+                size="md"
+                bg="gold"
                 fontWeight="bold"
-                color="white"
+                color="teal"
                 boxShadow="xl"
                 variant="solid"
                 onClick={() => onAdd(product)}
             >
-                Add
+                REDEEM
             </Button>
         </Stack>
     </Stack>

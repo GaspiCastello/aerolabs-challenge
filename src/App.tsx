@@ -36,7 +36,9 @@ const App: FC = () => {
                 const transformed = products.map((product: ProductDb) => ({
                     id: product._id,
                     category: product.category,
-                    cost: products.cost,
+                    cost: products.cost
+                        ? product.cost
+                        : Math.floor(Math.random() * 15 + 5),
                     title: product.name,
                     img: product.img,
                 }))
