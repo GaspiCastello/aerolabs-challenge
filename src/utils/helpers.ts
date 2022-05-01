@@ -14,7 +14,7 @@ export function editCart(
 ) {
     return (cart: CartItem[]): CartItem[] => {
         const isInCart = cart.some(
-            (item: { _id: string }) => item._id === product._id
+            (item: { id: string }) => item.id === product.id
         )
 
         if (!isInCart) {
@@ -22,7 +22,7 @@ export function editCart(
         }
 
         return cart.reduce((acc: CartItem[], _product: CartItem) => {
-            if (product._id !== _product._id) {
+            if (product.id !== _product.id) {
                 return acc.concat(_product)
             }
 
