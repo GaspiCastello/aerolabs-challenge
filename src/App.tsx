@@ -10,19 +10,18 @@ import { Product, ProductDb } from './types/types'
 const token =
     // eslint-disable-next-line max-len
     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY5OGJjN2FkYzQ1NTAwMWE2Y2JjM2IiLCJpYXQiOjE2NTEwODQyMzF9.z98IN81adDVPCXeVSZHGWBYxlY7tnQeWKQgT_YfkiYA'
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 
 const App: FC = () => {
     const [res, setRes] = useState<Product[]>([
         {
-            id: 'string',
-            category: 'string',
+            id: 'id',
+            category: 'category',
             cost: 10,
-            title: 'string',
-            img: { url: 'string', hdUrl: 'string' },
+            title: 'title',
+            img: { url: 'url', hdUrl: 'hdUrl' },
         },
     ])
-    console.log('res in app:', res)
+    console.log('Rs in app:', res)
     useEffect(() => {
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
