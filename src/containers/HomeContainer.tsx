@@ -1,4 +1,6 @@
-import React, { FC, useState } from 'react'
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable react/function-component-definition */
+import React, { FC, useState, useMemo } from 'react'
 import {
     Text,
     Grid,
@@ -11,7 +13,7 @@ import {
 import { Product } from '../types/types'
 import ProductCard from '../components/ProductCard'
 import DrawerCart from '../components/DrawerCart'
-import parseCurrency, { editCart } from '../utils/helpers'
+import { editCart, parseCurrency } from '../utils/helpers'
 
 interface HomeContainerProps {
     products: Product[]
@@ -20,18 +22,17 @@ interface HomeContainerProps {
 const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
     const [cart, setCart] = useState<Product[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const total = React.useMemo(
+    const total = useMemo(
         () =>
             parseCurrency(
                 cart.reduce(
-                    (total, product) =>
-                        total + product.price * product.quantity,
+                    (total, product) => total + product.cost * product.quantity,
                     0
                 )
             ),
         [cart]
     )
-    const quantity = React.useMemo(
+    const quantity = useMemo(
         () => cart.reduce((acc, item) => acc + item.quantity, 0),
         [cart]
     )
@@ -53,7 +54,7 @@ const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
                 >
                     {products.map((product) => (
                         <ProductCard
-                            key={product.id}
+                            key={product._id}
                             product={product}
                             onAdd={(product) =>
                                 handleEditCart(product, 'increment')
@@ -62,7 +63,7 @@ const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
                     ))}
                 </Grid>
             ) : (
-                <Text>No hay productos</Text>
+                <Text>No products</Text>
             )}
             {Boolean(cart.length) && (
                 <Flex
