@@ -6,6 +6,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { Spinner } from '@chakra-ui/react'
 import HomeContainer from './containers/HomeContainer'
 import { Product, ProductDb } from './types/types'
+import Layout from './containers/Layout'
 
 const token =
     // eslint-disable-next-line max-len
@@ -52,7 +53,7 @@ const App: FC = () => {
     if (res.length > 0) {
         content = <HomeContainer products={res} />
     }
-    return content
+    return <Layout>{content}</Layout>
 }
 
 export default App

@@ -15,14 +15,17 @@ import { CartItem, Product } from '../types/types'
 import ProductCard from '../components/ProductCard'
 import DrawerCart from '../components/DrawerCart'
 import { editCart, parseCurrency } from '../utils/helpers'
+import { useSortableData } from '../hooks/useSorting'
 
-interface HomeContainerProps {
+interface Props {
     products: Product[]
 }
 
-const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
+const HomeContainer: FC<Props> = ({ products }) => {
     const [cart, setCart] = useState<CartItem[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { sortedItems, requestSort, sortConfig } = useSortableData(products)
+    console.log('sorted:', sortedItems)
     const total = useMemo(
         () =>
             parseCurrency(
@@ -45,16 +48,36 @@ const HomeContainer: FC<HomeContainerProps> = ({ products }) => {
     ) => {
         setCart(editCart(product, action))
     }
-
+    let productsOnSort
+    if (sortedItems.length) {
+        productsOnSort = sortedItems
+    } else {
+        productsOnSort = [...products]
+    }
     return (
         <Stack>
-            {' '}
-            {products.length ? (
+            <Flex
+                alignItems="center"
+                justifyContent="center"
+                bottom={4}
+                position="sticky"
+            >
+                <Button margin={6} onClick={() => requestSort('cost')}>
+                    Sort by cost{' '}
+                </Button>
+                <Button margin={6} onClick={() => requestSort('title')}>
+                    Sort by title{' '}
+                </Button>
+                <Button margin={6} onClick={() => requestSort('category')}>
+                    Sort by category{' '}
+                </Button>
+            </Flex>
+            {productsOnSort.length ? (
                 <Grid
                     gridGap={8}
                     templateColumns="repeat(auto-fill, minmax(240px, 1fr))"
                 >
-                    {products.map((product) => (
+                    {productsOnSort.map((product) => (
                         <ProductCard
                             key={product.id}
                             product={product}

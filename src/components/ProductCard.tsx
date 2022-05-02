@@ -2,9 +2,7 @@
 /* eslint-disable max-len */
 import React, { FC } from 'react'
 import { Button, Stack, Text, Image } from '@chakra-ui/react'
-
 import { Product } from '../types/types'
-import { parseCurrency } from '../utils/helpers'
 
 interface ProductCardProps {
     product: Product
@@ -23,7 +21,7 @@ const ProductCard: FC<ProductCardProps> = ({
     onAdd,
 }) => (
     <Stack
-        backgroundColor="primary.100"
+        backgroundColor="grey"
         borderRadius="md"
         padding={4}
         spacing={4}
@@ -62,9 +60,9 @@ const ProductCard: FC<ProductCardProps> = ({
             </Text>
             <Button
                 size="md"
-                bg="gold"
+                bg="black"
                 fontWeight="bold"
-                color="teal"
+                color="white"
                 boxShadow="xl"
                 variant="solid"
                 onClick={() => onAdd(product)}

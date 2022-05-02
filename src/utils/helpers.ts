@@ -55,3 +55,31 @@ export function editCart(
         }, [])
     }
 }
+
+//     const { items, requestSort, sortConfig } = useSortableData(props.products)
+//     const getClassNamesFor = (name) => {
+//         if (!sortConfig) {
+//             return
+//         }
+//         return sortConfig.key === name ? sortConfig.direction : undefined
+//     }
+//     return (
+//         <table>
+//             <caption>Products</caption>
+//             <thead>
+//                 <tr>
+//                     <th>
+//                         <button
+//                             type="button"
+//                             onClick={() => requestSort('name')}
+//                             className={getClassNamesFor('name')}
+//                         >
+//                             Name
+//                         </button>
+//                     </th>
+//                     //...
+//                 </tr>
+//             </thead>
+//         </table>
+//     )
+// }
