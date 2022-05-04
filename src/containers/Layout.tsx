@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { information } from '../utils/constants'
 import aerolabLogo from '../assets/aerolab-logo.svg'
+import header from '../assets/header-x1.png'
 
 interface Props {
     children: ReactNode
@@ -23,7 +24,7 @@ const Layout: FC<Props> = ({ children }) => (
     <Box padding={4}>
         <Divider marginY={2} />
         <Container
-            backgroundColor="teal"
+            backgroundColor="#15DBFF"
             boxShadow="md"
             marginY={5}
             maxWidth="container.xl"
@@ -31,6 +32,11 @@ const Layout: FC<Props> = ({ children }) => (
             borderRadius={15}
         >
             <Stack
+                backgroundImage={header}
+                backgroundPosition="center top"
+                backgroundRepeat="no-repeat"
+                bgSize="contain"
+                h={300}
                 alignItems="center"
                 direction={{ base: 'column', sm: 'row' }}
                 spacing={{ base: 3, sm: 6 }}
@@ -55,10 +61,10 @@ const Layout: FC<Props> = ({ children }) => (
                             </Link>
                         ))}
                     </Stack>
-                </Stack>
-            </Stack>
-            <Stack />
-
+                    </Stack>
+                    </Stack>
+    
+   
             {children}
         </Container>
     </Box>

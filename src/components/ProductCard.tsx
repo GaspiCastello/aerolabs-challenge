@@ -15,13 +15,13 @@ const ProductCard: FC<ProductCardProps> = ({
         id,
         category,
         cost,
-        img: { hdUrl },
+        img: { url },
         title,
     },
     onAdd,
 }) => (
     <Stack
-        backgroundColor="grey"
+        backgroundColor="white"
         borderRadius="md"
         padding={4}
         spacing={4}
@@ -32,10 +32,10 @@ const ProductCard: FC<ProductCardProps> = ({
     >
         <Stack spacing={1}>
             <Image
-                maxHeight={128}
+                // maxHeight={350}
                 objectFit="cover"
                 borderRadius="md"
-                src={hdUrl}
+                src={url}
             />
             <Text color="primary.800" fontWeight={500}>
                 {title}
