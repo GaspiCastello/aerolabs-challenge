@@ -39,14 +39,10 @@ const DrawerCart: FC<Props> = ({
     onIncrement,
     onDelete,
 }) => {
-    const total =
-        // useMemo(() => {
-        // parseCurrency(
-        items.reduce((acc, product) => acc + product.cost * product.quantity, 0)
-    //     0
-    // )
-    // )
-    // }, [items])
+    const total = items.reduce(
+        (acc, product) => acc + product.cost * product.quantity,
+        0
+    )
 
     const text = useMemo(
         () =>

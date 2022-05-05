@@ -10,11 +10,10 @@ import {
     Stack,
     Image,
     Text,
-    Button,
 } from '@chakra-ui/react'
 import { information } from '../utils/constants'
-import aerolabLogo from '../assets/aerolab-logo.svg'
 import header from '../assets/header-x1.png'
+import UserCard from '../components/UserCard'
 
 interface Props {
     children: ReactNode
@@ -41,7 +40,13 @@ const Layout: FC<Props> = ({ children }) => (
                 direction={{ base: 'column', sm: 'row' }}
                 spacing={{ base: 3, sm: 6 }}
             >
-                <Image height={{ base: 35, sm: 40 }} src={aerolabLogo} />
+                <UserCard
+                    id="6r8f76f95d9"
+                    name="Gaspi"
+                    points={100}
+                    redeemHistory={[{}]}
+                    createDate={`${new Date().toString()}`}
+                />
 
                 <Stack textAlign={{ base: 'center', sm: 'left' }}>
                     <Heading>{information.title}</Heading>
@@ -61,10 +66,9 @@ const Layout: FC<Props> = ({ children }) => (
                             </Link>
                         ))}
                     </Stack>
-                    </Stack>
-                    </Stack>
-    
-   
+                </Stack>
+            </Stack>
+
             {children}
         </Container>
     </Box>

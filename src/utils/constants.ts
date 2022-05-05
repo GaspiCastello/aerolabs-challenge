@@ -1,6 +1,4 @@
 export const information = {
-    avatar: '//placehold.it/128x128',
-    banner: '//placehold.it/1440x320',
     title: 'AL fidelity Program',
     description: 'Grab your gift!',
     color: { primary: '#F49E4C', secondary: '#F1F5F2', terciary: '#353B3C' },
@@ -20,3 +18,6 @@ export const information = {
         },
     ],
 }
+export const token =
+    // eslint-disable-next-line max-len
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY5OGJjN2FkYzQ1NTAwMWE2Y2JjM2IiLCJpYXQiOjE2NTEwODQyMzF9.z98IN81adDVPCXeVSZHGWBYxlY7tnQeWKQgT_YfkiYA'

@@ -7,10 +7,7 @@ import { Spinner } from '@chakra-ui/react'
 import HomeContainer from './containers/HomeContainer'
 import { Product, ProductDb } from './types/types'
 import Layout from './containers/Layout'
-
-const token =
-    // eslint-disable-next-line max-len
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY5OGJjN2FkYzQ1NTAwMWE2Y2JjM2IiLCJpYXQiOjE2NTEwODQyMzF9.z98IN81adDVPCXeVSZHGWBYxlY7tnQeWKQgT_YfkiYA'
+import { token } from './utils/constants'
 
 const App: FC = () => {
     const [res, setRes] = useState<Product[]>([
@@ -23,6 +20,7 @@ const App: FC = () => {
         },
     ])
     console.log('Rs in app:', res)
+
     useEffect(() => {
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
