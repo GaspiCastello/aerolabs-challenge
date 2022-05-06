@@ -25,6 +25,7 @@ import { CartItem, Product } from '../types/types'
 import { parseCurrency } from '../utils/helpers'
 
 interface Props extends Omit<DrawerProps, 'children'> {
+    total: number
     items: CartItem[]
     onIncrement: (product: Product) => void
     onDecrement: (product: Product) => void
@@ -32,6 +33,7 @@ interface Props extends Omit<DrawerProps, 'children'> {
 }
 
 const DrawerCart: FC<Props> = ({
+    total,
     isOpen,
     onClose,
     items,
@@ -39,11 +41,7 @@ const DrawerCart: FC<Props> = ({
     onIncrement,
     onDelete,
 }) => {
-    const total = items.reduce(
-        (acc, product) => acc + product.cost * product.quantity,
-        0
-    )
-
+    console.log('items/cart in drawer', items)
     const text = useMemo(
         () =>
             items
@@ -63,8 +61,6 @@ const DrawerCart: FC<Props> = ({
                 .concat(`\nTotal: ${total}`),
         [items, total]
     )
-    console.log('text:', text)
-    console.log('total:', total)
     return (
         <>
             {' '}
@@ -104,10 +100,8 @@ const DrawerCart: FC<Props> = ({
                                                     {product.title}
                                                 </Text>
                                                 <Text color="green.500">
-                                                    {parseCurrency(
-                                                        product.cost *
-                                                            product.quantity
-                                                    )}
+                                                    {product.cost *
+                                                        product.quantity}
                                                 </Text>
                                             </Stack>
                                         </Stack>

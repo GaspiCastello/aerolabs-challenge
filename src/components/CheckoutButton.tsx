@@ -1,20 +1,19 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable max-len */
 import React, { FC } from 'react'
-import { Stack, Text, Button, Flex, ButtonProps } from '@chakra-ui/react'
+import { Stack, Text, Button, Flex, ButtonProps, Box } from '@chakra-ui/react'
 
 interface Props extends Omit<ButtonProps, 'children'> {
-    total: string
+    total: number
     quantity: number
 }
 
-const SeeCartButton: FC<Props> = ({ onClick, total, quantity }) => (
+const CheckoutButton: FC<Props> = ({ onClick, total, quantity }) => (
     <Flex
         alignItems="center"
         justifyContent="center"
         bottom={4}
         position="sticky"
-        w={200}
     >
         <Button
             size="lg"
@@ -33,7 +32,7 @@ const SeeCartButton: FC<Props> = ({ onClick, total, quantity }) => (
                     </Text>
                     <Text
                         backgroundColor="rgba(0,0,0,0.25)"
-                        borderRadius="xs"
+                        borderRadius="md"
                         color="gray.100"
                         fontSize="s"
                         fontWeight="500"
@@ -44,10 +43,10 @@ const SeeCartButton: FC<Props> = ({ onClick, total, quantity }) => (
                     </Text>
                 </Stack>
                 <Text fontSize="md" lineHeight={6}>
-                    {total}
+                    {total} Points
                 </Text>
             </Stack>
         </Button>
     </Flex>
 )
-export default SeeCartButton
+export default CheckoutButton

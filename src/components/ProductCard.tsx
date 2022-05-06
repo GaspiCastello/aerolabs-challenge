@@ -32,15 +32,17 @@ const ProductCard: FC<ProductCardProps> = ({
     >
         <Stack spacing={1}>
             <Image
-                // maxHeight={350}
+                maxHeight={300}
                 objectFit="cover"
                 borderRadius="md"
                 src={url}
             />
-            <Text color="primary.800" fontWeight={500}>
+            <Text marginY={10} color="primary.800" fontWeight={500}>
                 {title}
             </Text>
-            <Text fontSize="sm">Category: {category}</Text>
+            <Text fontSize="sm">
+                {title} Category: {category}
+            </Text>
         </Stack>
 
         <Stack

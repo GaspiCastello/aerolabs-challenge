@@ -9,6 +9,7 @@ import {
     Button,
     Flex,
     useDisclosure,
+    Spinner,
 } from '@chakra-ui/react'
 
 import { CartItem, Product } from '../types/types'
@@ -16,7 +17,7 @@ import ProductCard from '../components/ProductCard'
 import DrawerCart from '../components/DrawerCart'
 import { editCart, parseCurrency } from '../utils/helpers'
 import { useSortableData } from '../hooks/useSorting'
-import SeeCartButton from '../components/SeeCartButton'
+import CheckoutButton from '../components/CheckoutButton'
 
 interface Props {
     products: Product[]
@@ -26,14 +27,15 @@ const HomeContainer: FC<Props> = ({ products }) => {
     const [cart, setCart] = useState<CartItem[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { sortedItems, requestSort, sortConfig } = useSortableData(products)
-    console.log('sorted:', sortedItems)
+    // console.log('sorted:', sortedItems)
+
     const total = useMemo(
         () =>
-            parseCurrency(
-                cart.reduce(
-                    (acc, product) => acc + product.cost * product.quantity,
-                    0
-                )
+            // parseCurrency(
+            // ),
+            cart.reduce(
+                (acc, product) => acc + product.cost * product.quantity,
+                0
             ),
         [cart]
     )
@@ -90,16 +92,20 @@ const HomeContainer: FC<Props> = ({ products }) => {
                     ))}
                 </Grid>
             ) : (
-                <Text>No products</Text>
+                <Stack>
+                    <Spinner />
+                    <Text>No products</Text>
+                </Stack>
             )}
             {Boolean(cart.length) && (
-                <SeeCartButton
+                <CheckoutButton
                     onClick={onOpen}
                     quantity={quantity}
                     total={total}
                 />
             )}
             <DrawerCart
+                total={total}
                 items={cart}
                 isOpen={isOpen}
                 onClose={onClose}

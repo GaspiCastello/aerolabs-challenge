@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable no-underscore-dangle */
-import { CartItem, Product } from '../types/types'
+import { CartItem, Product, ProductDb } from '../types/types'
 
 export function parseCurrency(value: number): string {
     return value.toLocaleString('es-AR', {
@@ -7,6 +8,14 @@ export function parseCurrency(value: number): string {
         currency: 'ARS',
     })
 }
+export const transformRes = (data: ProductDb[]) =>
+    data.map((product) => ({
+        id: product._id,
+        category: product.category,
+        cost: product.cost ? product.cost : Math.floor(Math.random() * 15 + 5),
+        title: product.name,
+        img: product.img,
+    }))
 
 export function editCart(
     product: Product,
@@ -55,31 +64,3 @@ export function editCart(
         }, [])
     }
 }
-
-//     const { items, requestSort, sortConfig } = useSortableData(props.products)
-//     const getClassNamesFor = (name) => {
-//         if (!sortConfig) {
-//             return
-//         }
-//         return sortConfig.key === name ? sortConfig.direction : undefined
-//     }
-//     return (
-//         <table>
-//             <caption>Products</caption>
-//             <thead>
-//                 <tr>
-//                     <th>
-//                         <button
-//                             type="button"
-//                             onClick={() => requestSort('name')}
-//                             className={getClassNamesFor('name')}
-//                         >
-//                             Name
-//                         </button>
-//                     </th>
-//                     //...
-//                 </tr>
-//             </thead>
-//         </table>
-//     )
-// }
