@@ -15,7 +15,7 @@ import {
 import { CartItem, Product } from '../types/types'
 import ProductCard from '../components/ProductCard'
 import DrawerCart from '../components/DrawerCart'
-import { editCart, parseCurrency } from '../utils/helpers'
+import { editCart } from '../utils/helpers'
 import { useSortableData } from '../hooks/useSorting'
 import CheckoutButton from '../components/CheckoutButton'
 
@@ -31,8 +31,6 @@ const HomeContainer: FC<Props> = ({ products }) => {
 
     const total = useMemo(
         () =>
-            // parseCurrency(
-            // ),
             cart.reduce(
                 (acc, product) => acc + product.cost * product.quantity,
                 0
