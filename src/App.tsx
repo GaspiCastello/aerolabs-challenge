@@ -14,15 +14,7 @@ const App: FC = () => {
     useEffect(() => fetchData({ url: '/products' }, transformRes), [fetchData])
 
     return (
-        <Layout
-            user={{
-                id: 'string',
-                name: 'string',
-                points: 10,
-                redeemHistory: [{}],
-                createDate: 'string',
-            }}
-        >
+        <Layout>
             <HomeContainer products={response} />
         </Layout>
     )

@@ -1,19 +1,12 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable max-len */
-import React, { FC, Fragment } from 'react'
+import React, { FC } from 'react'
 import { Heading, Link, Stack, Image, Text, Divider } from '@chakra-ui/react'
 import { information } from '../utils/constants'
 import header from '../assets/header-x1.png'
 import UserCard from './UserCard'
-import { User } from '../types/types'
 
-interface HeaderProps {
-    user: User
-}
-
-const Header: FC<HeaderProps> = ({
-    user: { id, name, points, redeemHistory },
-}) => (
+const Header: FC = () => (
     <>
         <Stack
             backgroundImage={header}
@@ -25,13 +18,7 @@ const Header: FC<HeaderProps> = ({
             direction={{ base: 'column', sm: 'row' }}
             spacing={{ base: 3, sm: 6 }}
         >
-            <UserCard
-                id={id}
-                name={name}
-                points={points}
-                redeemHistory={redeemHistory}
-                createDate={`${new Date().toString()}`}
-            />
+            <UserCard />
 
             <Stack textAlign={{ base: 'center', sm: 'left' }}>
                 <Heading>{information.title}</Heading>

@@ -3,13 +3,9 @@
 import React, { FC } from 'react'
 import { Button, Stack, Text, Image } from '@chakra-ui/react'
 import { Product } from '../types/types'
+import { useCartContext } from '../store/cart-context'
 
-interface ProductCardProps {
-    product: Product
-    onAdd: (product: Product) => void
-}
-
-const ProductCard: FC<ProductCardProps> = ({
+const ProductCard: FC<{ product: Product }> = ({
     product,
     product: {
         id,
@@ -18,60 +14,63 @@ const ProductCard: FC<ProductCardProps> = ({
         img: { url },
         title,
     },
-    onAdd,
-}) => (
-    <Stack
-        backgroundColor="white"
-        borderRadius="md"
-        padding={4}
-        spacing={4}
-        key={id}
-        boxShadow="xl"
-        p="6"
-        rounded="md"
-    >
-        <Stack spacing={1}>
-            <Image
-                maxHeight={300}
-                objectFit="cover"
-                borderRadius="md"
-                src={url}
-            />
-            <Text marginY={10} color="primary.800" fontWeight={500}>
-                {title}
-            </Text>
-            <Text fontSize="sm">
-                {title} Category: {category}
-            </Text>
-        </Stack>
-
+}) => {
+    const { onCheckoutPoints, handleEditCart } = useCartContext()
+    return (
         <Stack
-            alignItems="flex-end"
-            direction="row"
-            justifyContent="space-between"
+            backgroundColor="white"
+            borderRadius="md"
+            padding={4}
+            spacing={4}
+            boxShadow="xl"
+            p="6"
+            rounded="md"
         >
-            <Text
-                backgroundColor="#F49E4C"
-                rounded="2rem"
-                color="white"
-                fontSize="md"
-                fontWeight="500"
-                p=".5rem"
+            <Stack spacing={1}>
+                <Image
+                    maxHeight={300}
+                    objectFit="cover"
+                    borderRadius="md"
+                    src={url}
+                />
+                <Text marginY={10} color="primary.800" fontWeight={500}>
+                    {title}
+                </Text>
+                <Text fontSize="sm">Category: {category}</Text>
+            </Stack>
+
+            <Stack
+                alignItems="flex-end"
+                direction="row"
+                justifyContent="space-between"
             >
-                {cost} points
-            </Text>
+                <Text
+                    backgroundColor="#F49E4C"
+                    rounded="2rem"
+                    color="white"
+                    fontSize="md"
+                    fontWeight="500"
+                    p=".5rem"
+                >
+                    {cost}
+                </Text>
+            </Stack>
             <Button
-                size="md"
+                size="lg"
+                width="100%"
                 bg="black"
                 fontWeight="bold"
                 color="white"
                 boxShadow="xl"
                 variant="solid"
-                onClick={() => onAdd(product)}
+                onClick={() => handleEditCart(product, 'increment')}
+                disabled={onCheckoutPoints < cost}
             >
-                REDEEM
+                {onCheckoutPoints > cost
+                    ? 'Redeem'
+                    : `Need ${cost - onCheckoutPoints}+`}
             </Button>
         </Stack>
-    </Stack>
-)
+    )
+}
 export default ProductCard

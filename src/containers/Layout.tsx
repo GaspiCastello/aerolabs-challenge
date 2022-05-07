@@ -3,14 +3,12 @@
 import React, { FC, ReactNode } from 'react'
 import { Box, Container } from '@chakra-ui/react'
 import Header from '../components/Header'
-import { User } from '../types/types'
 
 interface Props {
     children: ReactNode
-    user: User
 }
 
-const Layout: FC<Props> = ({ children, user }) => (
+const Layout: FC<Props> = ({ children }) => (
     <Box padding={4}>
         <Container
             backgroundColor="#15DBFF"
@@ -20,7 +18,7 @@ const Layout: FC<Props> = ({ children, user }) => (
             padding={5}
             borderRadius={15}
         >
-            <Header user={user} />
+            <Header />
             {children}
         </Container>
     </Box>

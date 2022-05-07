@@ -1,69 +1,53 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable max-len */
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import {
     Button,
-    DrawerProps,
     Drawer,
     DrawerBody,
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
-    Link,
     Stack,
     Text,
     CloseButton,
-    Image,
     Divider,
     IconButton,
+    useDisclosure,
 } from '@chakra-ui/react'
 import { BsPatchMinus, BsCloudMinus, BsPlusCircle } from 'react-icons/bs'
+import { useCartContext } from '../store/cart-context'
+import { useAxios } from '../hooks/use-axios'
+import CheckoutButton from './CheckoutButton'
 
-import { CartItem, Product } from '../types/types'
-import { parseCurrency } from '../utils/helpers'
+const DrawerCart: FC = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { cart, onCheckoutPoints, total, handleEditCart, onCheckoutHandler } =
+        useCartContext()
+    // console.log('cart in drawer', cart)
+    const { fetchData } = useAxios()
+    const onCheckOut = async () => {
+        const arrayOfPromises = cart.map(({ id }) =>
+            fetchData({
+                url: 'redeem',
+                method: 'POST',
+                data: {
+                    productId: `${id}`,
+                },
+            })
+        )
+        const res = await Promise.all(arrayOfPromises)
+        console.log('Response of promise.all', res)
+        console.log('Array of prom', arrayOfPromises)
+        onCheckoutHandler()
+    }
 
-interface Props extends Omit<DrawerProps, 'children'> {
-    total: number
-    items: CartItem[]
-    onIncrement: (product: Product) => void
-    onDecrement: (product: Product) => void
-    onDelete: (product: Product) => void
-}
-
-const DrawerCart: FC<Props> = ({
-    total,
-    isOpen,
-    onClose,
-    items,
-    onDecrement,
-    onIncrement,
-    onDelete,
-}) => {
-    console.log('items/cart in drawer', items)
-    const text = useMemo(
-        () =>
-            items
-                .reduce(
-                    (message, product) =>
-                        message.concat(
-                            `* ${product.title}${
-                                product.quantity > 1
-                                    ? ` (X${product.quantity})`
-                                    : ``
-                            } - ${parseCurrency(
-                                product.cost * product.quantity
-                            )}\n`
-                        ),
-                    ``
-                )
-                .concat(`\nTotal: ${total}`),
-        [items, total]
-    )
     return (
         <>
-            {' '}
+            {cart.length && <CheckoutButton onClick={onOpen} />}
             <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent>
@@ -73,15 +57,15 @@ const DrawerCart: FC<Props> = ({
                             alignItems="center"
                             justifyContent="space-between"
                         >
-                            <Text fontSize="3xl"> Tu Carrito</Text>
+                            <Text fontSize="3xl"> Cart</Text>
                             <CloseButton onClick={onClose} />
                         </Stack>
                     </DrawerHeader>
 
                     <DrawerBody data-testid="cart" paddingX={4}>
                         <Stack>
-                            {items.length ? (
-                                items.map((product) => (
+                            {cart.length ? (
+                                cart.map((product) => (
                                     <Stack
                                         key={product.id}
                                         data-testid="cart-item"
@@ -125,7 +109,10 @@ const DrawerCart: FC<Props> = ({
                                                     size="xs"
                                                     icon={<BsCloudMinus />}
                                                     onClick={() =>
-                                                        onDecrement(product)
+                                                        handleEditCart(
+                                                            product,
+                                                            'decrement'
+                                                        )
                                                     }
                                                 />
 
@@ -142,8 +129,15 @@ const DrawerCart: FC<Props> = ({
                                                     aria-label="Increment units"
                                                     size="xs"
                                                     icon={<BsPlusCircle />}
+                                                    disabled={
+                                                        onCheckoutPoints <
+                                                        product.cost
+                                                    }
                                                     onClick={() =>
-                                                        onIncrement(product)
+                                                        handleEditCart(
+                                                            product,
+                                                            'increment'
+                                                        )
                                                     }
                                                 />
                                                 <IconButton
@@ -153,7 +147,10 @@ const DrawerCart: FC<Props> = ({
                                                     size="xs"
                                                     icon={<BsPatchMinus />}
                                                     onClick={() =>
-                                                        onDelete(product)
+                                                        handleEditCart(
+                                                            product,
+                                                            'delete'
+                                                        )
                                                     }
                                                 />
                                             </Stack>
@@ -166,7 +163,7 @@ const DrawerCart: FC<Props> = ({
                         </Stack>
                     </DrawerBody>
 
-                    {Boolean(items.length) && (
+                    {cart.length && (
                         <DrawerFooter>
                             <Stack width="100%">
                                 <Stack
@@ -178,18 +175,9 @@ const DrawerCart: FC<Props> = ({
                                     <Text fontSize="xl">{total} Points</Text>
                                 </Stack>
                                 <Button
-                                    isExternal
-                                    as={Link}
-                                    colorScheme="whatsapp"
-                                    data-testid="complete-order"
-                                    href={`https://wa.me/5493426156014?text=${encodeURIComponent(
-                                        text
-                                    )}`}
                                     size="lg"
                                     width="100%"
-                                    leftIcon={
-                                        <Image src="https://icongr.am/fontawesome/whatsapp.svg?size=24&color=ffffff" />
-                                    }
+                                    onClick={onCheckOut}
                                 >
                                     Check Out
                                 </Button>
