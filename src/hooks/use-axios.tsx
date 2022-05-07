@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import axios from 'axios'
@@ -11,7 +12,7 @@ axios.defaults.headers.common.Accept = 'application/json'
 axios.defaults.headers.common.Authorization = token
 
 export const useAxios = () => {
-    const [response, setResponse] = useState([])
+    const [response, setResponse] = useState()
 
     const fetchData = useCallback(
         (config: object, transformerData?: (data: any) => any) => {
