@@ -10,6 +10,8 @@ import React, {
     useEffect,
     useMemo,
     FC,
+    Dispatch,
+    SetStateAction,
 } from 'react'
 import { useAxios } from '../hooks/use-axios'
 import { CartItem, Product, User } from '../types/types'
@@ -25,7 +27,7 @@ const CartContext = createContext<{
         product: Product,
         action: 'increment' | 'decrement' | 'delete'
     ) => void
-    onCheckoutHandler: () => void
+    setCart: Dispatch<SetStateAction<CartItem[]>>
 }>({
     cart: [],
     user: { id: '', name: '', points: 0, redeemHistory: [], createDate: '' },
@@ -33,7 +35,7 @@ const CartContext = createContext<{
     quantity: 0,
     onCheckoutPoints: 0,
     handleEditCart: () => {},
-    onCheckoutHandler: () => {},
+    setCart: () => {},
 })
 
 export const useCartContext = () => useContext(CartContext)
@@ -74,14 +76,12 @@ export const CartProvider: FC<Props> = ({ children }) => {
     ) => {
         setCart(editCart(product, action))
     }
-    const onCheckoutHandler = () => {
-        fetchData({ url: 'user/me' })
-        setCart([])
-    }
 
     useEffect(() => {
-        fetchData({ url: 'user/me' })
-    }, [])
+        if (cart.length === 0) {
+            fetchData({ url: 'user/me' })
+        }
+    }, [cart, fetchData])
 
     const values = {
         cart,
@@ -90,7 +90,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
         quantity,
         onCheckoutPoints: user.points - total,
         handleEditCart,
-        onCheckoutHandler,
+        setCart,
     }
     return (
         <CartContext.Provider value={values}>{children}</CartContext.Provider>

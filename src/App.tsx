@@ -9,7 +9,7 @@ import { transformRes } from './utils/helpers'
 
 const App: FC = () => {
     const { fetchData, response = [] } = useAxios()
-    console.log('Response in app:', response)
+    // console.log('Response in app:', response)
 
     useEffect(() => fetchData({ url: '/products' }, transformRes), [fetchData])
 

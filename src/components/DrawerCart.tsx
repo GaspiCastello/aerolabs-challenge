@@ -1,3 +1,4 @@
+/* eslint-disable no-sequences */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/function-component-definition */
@@ -22,27 +23,30 @@ import { BsPatchMinus, BsCloudMinus, BsPlusCircle } from 'react-icons/bs'
 import { useCartContext } from '../store/cart-context'
 import { useAxios } from '../hooks/use-axios'
 import CheckoutButton from './CheckoutButton'
+import { cartToPost } from '../utils/helpers'
 
 const DrawerCart: FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { cart, onCheckoutPoints, total, handleEditCart, onCheckoutHandler } =
+    const { cart, onCheckoutPoints, total, handleEditCart, setCart } =
         useCartContext()
     // console.log('cart in drawer', cart)
     const { fetchData } = useAxios()
+
     const onCheckOut = async () => {
-        const arrayOfPromises = cart.map(({ id }) =>
+        const arrayOfPromises = cartToPost(cart).map(({ id }) =>
             fetchData({
                 url: 'redeem',
                 method: 'POST',
                 data: {
-                    productId: `${id}`,
+                    productId: id,
                 },
             })
         )
         const res = await Promise.all(arrayOfPromises)
-        console.log('Response of promise.all', res)
-        console.log('Array of prom', arrayOfPromises)
-        onCheckoutHandler()
+        console.log(cartToPost)
+        // console.log('Response of promise.all', res)
+        // console.log('Array of prom', arrayOfPromises)
+        setCart([])
     }
 
     return (

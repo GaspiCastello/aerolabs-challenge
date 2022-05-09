@@ -19,7 +19,7 @@ export const useAxios = () => {
             axios
                 .request(config)
                 .then((res) => {
-                    console.log(res, 'res on use-axios')
+                    // console.log(res, 'res on use-axios')
                     if (transformerData) {
                         const transformedData = transformerData(res.data)
                         setResponse(transformedData)
@@ -28,13 +28,13 @@ export const useAxios = () => {
                     }
                 })
                 .catch((error) => {
-                    console.log(error.response, error.message)
+                    // console.log(error.response, error.message)
                     if (error.response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
-                        console.log(error.response.data)
-                        console.log(error.response.status)
-                        console.log(error.response.headers)
+                        // console.log(error.response.data)
+                        // console.log(error.response.status)
+                        // console.log(error.response.headers)
                         return swal(
                             error.response.data.message,
                             'from aerolabs api',

@@ -1,14 +1,14 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable max-len */
 import React, { FC } from 'react'
-import { Stack, Text, Image } from '@chakra-ui/react'
+import { Stack, Image, Badge, Text, Flex } from '@chakra-ui/react'
+import { BsCoin } from 'react-icons/bs'
 import placeHolder from '../assets/pngfind.png'
 import { useCartContext } from '../store/cart-context'
 
 const UserCard: FC = () => {
     const {
         user: { id, name, points },
-        onCheckoutPoints,
     } = useCartContext()
     return (
         <Stack
@@ -28,17 +28,8 @@ const UserCard: FC = () => {
                     h={32}
                     src={placeHolder}
                 />
-                <Text color="primary.800" fontWeight={500}>
-                    {name}
-                </Text>
-                <Text fontSize="sm">
-                    Points:
-                    {points}
-                </Text>
-                <Text fontSize="sm">
-                    Points if confirme:
-                    {onCheckoutPoints}
-                </Text>
+                <Text fontSize={15}>{name}</Text>
+                <Text fontSize={15}>{points}</Text>
             </Stack>
         </Stack>
     )

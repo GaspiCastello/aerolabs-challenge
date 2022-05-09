@@ -1,13 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable no-underscore-dangle */
 import { CartItem, Product, ProductDb } from '../types/types'
 
-export function parseCurrency(value: number): string {
-    return value.toLocaleString('es-AR', {
-        style: 'currency',
-        currency: 'ARS',
-    })
-}
+export const cartToPost = (cart: CartItem[]) =>
+    cart
+        // .map((id, quantity) => ({ id, quantity }))
+        .reduce(
+            (acc: { id: string }[], cur: { id: any; quantity: any }) =>
+                acc.concat(new Array(cur.quantity).fill({ id: cur.id })),
+            []
+        )
+
 export const transformRes = (data: ProductDb[]) =>
     data.map((product) => ({
         id: product._id,
