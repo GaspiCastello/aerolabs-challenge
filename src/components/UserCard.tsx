@@ -1,8 +1,7 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable max-len */
 import React, { FC } from 'react'
-import { Stack, Image, Badge, Text, Flex } from '@chakra-ui/react'
-import { BsCoin } from 'react-icons/bs'
+import { Stack, Image, Text } from '@chakra-ui/react'
 import placeHolder from '../assets/pngfind.png'
 import { useCartContext } from '../store/cart-context'
 
